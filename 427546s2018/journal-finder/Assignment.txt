@@ -1,0 +1,265 @@
+ACM Transactions on Graphics (TOG)
+
+@article{Bitterli:2017:RJM:3151031.3132704,
+ author = {Bitterli, Benedikt and Jakob, Wenzel and Nov\'{a}k, Jan and Jarosz, Wojciech},
+ title = {Reversible Jump Metropolis Light Transport Using Inverse Mappings},
+ journal = {ACM Trans. Graph.},
+ issue_date = {January 2018},
+ volume = {37},
+ number = {1},
+ month = oct,
+ year = {2017},
+ issn = {0730-0301},
+ pages = {1:1--1:12},
+ articleno = {1},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/3132704},
+ doi = {10.1145/3132704},
+ acmid = {3132704},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Ray tracing, photorealistic rendering},
+}
+
+@Article{Bala:2017:3127587,
+ editor = {Bala, Kavita},
+ journal = {ACM Trans. Graph.},
+ year = {2017},
+ issn = {0730-0301},
+ volume = {36},
+ number = {5},
+ issue_date = {October 2017},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+
+
+IEEE Transactions on Visualization and Computer Graphics (TVCG)
+
+@ARTICLE{8276573,
+author={A. M. Reach and C. North},
+journal={IEEE Transactions on Visualization and Computer Graphics},
+title={Smooth, Efficient, and Interruptible Zooming and Panning},
+year={2018},
+volume={PP},
+number={99},
+pages={1-1},
+abstract={This paper introduces a novel technique for smooth and efficient zooming and panning based on dynamical systems in hyperbolic space. Unlike the technique of van Wijk and Nuij, the animations produced by our technique are smooth at the endpoints and when interrupted by a change of target. To analyze the results of our technique, we introduce world/screen diagrams, a novel technique for visualizing zooming and panning animations.},
+keywords={Animation;Cameras;Geometry;Measurement;Navigation;Space stations;Visualization},
+doi={10.1109/TVCG.2018.2800013},
+ISSN={1077-2626},
+month={},}
+
+@ARTICLE{7557083,
+author={J. Fan and J. Yang and Y. Zhao and D. Ai and Y. Liu and G. Wang and Y. Wang},
+journal={IEEE Transactions on Visualization and Computer Graphics},
+title={Convex Hull Aided Registration Method (CHARM)},
+year={2017},
+volume={23},
+number={9},
+pages={2042-2055},
+abstract={Non-rigid registration finds many applications such as photogrammetry, motion tracking, model retrieval, and object recognition. In this paper we propose a novel convex hull aided registration method (CHARM) to match two point sets subject to a non-rigid transformation. First, two convex hulls are extracted from the source and target respectively. Then, all points of the point sets are projected onto the reference plane through each triangular facet of the hulls. From these projections, invariant features are extracted and matched optimally. The matched feature point pairs are mapped back onto the triangular facets of the convex hulls to remove outliers that are outside any relevant triangular facet. The rigid transformation from the source to the target is robustly estimated by the random sample consensus (RANSAC) scheme through minimizing the distance between the matched feature point pairs. Finally, these feature points are utilized as the control points to achieve non-rigid deformation in the form of thin-plate spline of the entire source point set towards the target one. The experimental results based on both synthetic and real data show that the proposed algorithm outperforms several state-of-the-art ones with respect to sampling, rotational angle, and data noise. In addition, the proposed CHARM algorithm also shows higher computational efficiency compared to these methods.},
+keywords={feature extraction;image matching;image registration;random processes;sampling methods;solid modelling;splines (mathematics);3D models;CHARM;RANSAC scheme;convex hull aided registration method;data noise;invariant feature extraction;matched feature point pairs;nonrigid deformation;nonrigid registration;nonrigid transformation;random sample consensus;rotational angle;thin-plate spline;Computational modeling;Deformable models;Feature extraction;Iterative closest point algorithm;Robustness;Solid modeling;Three-dimensional displays;Point set;convex hull;invariant feature;non-rigid registration;parallel projection},
+doi={10.1109/TVCG.2016.2602858},
+ISSN={1077-2626},
+month={Sept},}
+
+
+
+IEEE Computer Graphics and Applications (CG&A)
+
+@ARTICLE{8255772,
+author={N. Nilsson and T. Peck and G. Bruder and E. Hodgson and S. Serafin and E. Suma and M. Whitton and F. Steinicke},
+journal={IEEE Computer Graphics and Applications},
+title={15 Years of Research on Redirected Walking in Immersive Virtual Environments},
+year={2018},
+volume={PP},
+number={99},
+pages={1-1},
+abstract={More than 15 years have passed since Razzaque et al. presented their seminal paper introducing redirected walking to the scientic community. By inducing unnoticeable rotations to the virtual environment around users wearing a head-mounted display the users could be given the illusion of walking in any direction for innite time and distance in a virtual environment while, in reality, they were redirected to walk back and forth in the tracked physical space. What started as a simple idea has led to several publications, open source software libraries, multiple commercial applications, and has directly or indirectly inuenced many other disciplines of research. In this article we present a survey of the literature on redirected walking that ranges from Razzaque et al.s original technique to recent improvements, and discuss challenges for the scientic community to guide future research.},
+keywords={Computer architecture;Legged locomotion;Object recognition;Safety;Space exploration;Virtual environments;artificial, augmented, and virtual realities;computer graphics;computing methodologies;interaction techniques;methodology and techniques;multimedia information systems information interfaces and rep;three-dimensional graphics and realism;virtual reality},
+doi={10.1109/MCG.2018.111125628},
+ISSN={0272-1716},
+month={},}
+
+
+@ARTICLE{8047424,
+author={T. von Landesberger and S. Bremm and M. Wunderlich},
+journal={IEEE Computer Graphics and Applications},
+title={Typology of Uncertainty in Static Geolocated Graphs for Visualization},
+year={2017},
+volume={37},
+number={5},
+pages={18-27},
+abstract={Static geolocated graphs have nodes connected by edges, where both can have geographic location and associated attributes. For example, it can be uncertain exactly where a node is located or whether an edge between two nodes exists. Because source data is often incomplete or inexact, it is necessary to visualize this uncertainty to help users make appropriate decisions. The proposed typology of uncertainty extends related typologies with specific features needed for characterizing uncertainty in static geolocated graphs.},
+keywords={data visualisation;decision making;graph theory;decision making;geographic location;source data;static geolocated graphs;uncertainty typology;visualization;Data science;Edge detection;Geographic information systems;Topology;Visualization;GIS;computer graphics;edge uncertainty;geographic data science;networks;node uncertainty;spatial databases;visualization},
+doi={10.1109/MCG.2017.3621220},
+ISSN={0272-1716},
+month={},}
+
+
+
+ACM SIGGRAPH Computer Graphics (conference proceedings only, published as an ACM TOG issue)
+
+@article{He:2017:GPV:3151031.3144455,
+ author = {He, Mingming and Liao, Jing and Sander, Pedro V. and Hoppe, Hugues},
+ title = {Gigapixel Panorama Video Loops},
+ journal = {ACM Trans. Graph.},
+ issue_date = {January 2018},
+ volume = {37},
+ number = {1},
+ month = nov,
+ year = {2017},
+ issn = {0730-0301},
+ pages = {3:1--3:15},
+ articleno = {3},
+ numpages = {15},
+ url = {http://doi.acm.org/10.1145/3144455},
+ doi = {10.1145/3144455},
+ acmid = {3144455},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Video textures, cinemagraphs, video stitching},
+} 
+
+@article{Sendik:2017:DCT:3127587.3015461,
+ author = {Sendik, Omry and Cohen-Or, Daniel},
+ title = {Deep Correlations for Texture Synthesis},
+ journal = {ACM Trans. Graph.},
+ issue_date = {October 2017},
+ volume = {36},
+ number = {5},
+ month = jul,
+ year = {2017},
+ issn = {0730-0301},
+ pages = {161:1--161:15},
+ articleno = {161},
+ numpages = {15},
+ url = {http://doi.acm.org/10.1145/3015461},
+ doi = {10.1145/3015461},
+ acmid = {3015461},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Texture synthesis, autocorrelation, neural networks},
+} 
+
+
+
+
+
+
+
+Computers and Graphics (C&G)
+
+@article{Lee20181,
+title = "Heuristic misfit reduction: A programmable approach for 3D garment fit customization ",
+journal = "Computers & Graphics ",
+volume = "71",
+number = "",
+pages = "1 - 13",
+year = "2018",
+note = "",
+issn = "0097-8493",
+doi = "https://doi.org/10.1016/j.cag.2017.10.004",
+url = "https://www.sciencedirect.com/science/article/pii/S009784931730170X",
+author = "Wonseop Lee and Hyeong-Seok Ko",
+keywords = "Clothing simulation",
+keywords = "Fit customization",
+keywords = "Pattern-making",
+keywords = "Computer animation ",
+abstract = "Abstract Based on the physically-based clothing simulation, this paper develops a novel method to customize the fit of the given garment to the reference body. The method defines three misfit measures, namely the landmark point misfit, landmark line misfit, and circumferential misfit, based on the correspondence between the landmark points and landmark lines in the body and garment. In terms of the above misfit measures, this paper proposes the heuristic misfit reduction method. The heuristic misfit reduction method works in the following way. Starting from a given preliminary garment, it (1) performs the fit evaluation, (2) modifies the panels based on the evaluation to enhance the fit, then (3) performs the draping simulation with the modified panels. The procedure is repeated until a satisfactory fit is achieved. According to our experiments, the proposed method successfully customizes a given garment to fit to the given body. "
+}
+
+
+
+@article{Hernandez201714,
+title = "Accurate 3D face reconstruction via prior constrained structure from motion ",
+journal = "Computers & Graphics ",
+volume = "66",
+number = "",
+pages = "14 - 22",
+year = "2017",
+note = "Shape Modeling International 2017 ",
+issn = "0097-8493",
+doi = "https://doi.org/10.1016/j.cag.2017.05.008",
+url = "https://www.sciencedirect.com/science/article/pii/S0097849317300572",
+author = "Matthias Hernandez and Tal Hassner and Jongmoo Choi and Gerard Medioni",
+keywords = "3D face reconstruction",
+keywords = "Face tracking",
+keywords = "Structure from motion",
+keywords = "3DMM ",
+abstract = "Abstract We propose a novel structure from motion (SfM) based method for reconstructing the 3D shapes of faces appearing in unconstrained videos. SfM techniques were studied since the early days of computer vision and their limitations are well known. In particular, they are unsuited for the low resolution scenes typical of videos of faces in the wild. To address this, we propose using a parametric face representation as a shape prior to constrain the estimated 3D face shape. Our proposed reconstruction method explores the space around the prior, modifying its 3D shape along with the estimated, per frame cameras and expressions in a manner designed to maximize photometric consistency across video frames yet produce face shapes. Our tests show that this process is both faster and provides superior 3D reconstruction accuracy when compared to existing alternatives. "
+}
+
+
+
+
+
+Computer Graphics Forum (CGF)
+
+@article {CGF:CGF12990,
+author = {Wang, Z. and Esturo, J. Martinez and Seidel, H.-P. and Weinkauf, T.},
+title = {Stream Line–Based Pattern Search in Flows},
+journal = {Computer Graphics Forum},
+volume = {36},
+number = {8},
+issn = {1467-8659},
+url = {http://dx.doi.org/10.1111/cgf.12990},
+doi = {10.1111/cgf.12990},
+pages = {7--18},
+keywords = {visualization, pattern search, stream lines, Categories and Subject Descriptors (according to ACM CCS): I.3.3 [Computer Graphics]: Picture/Image Generation–Line and curve generation},
+year = {2017},
+abstract = {We propose a method that allows users to define flow features in form of patterns represented as sparse sets of stream line segments. Our approach finds similar occurrences in the same or other time steps. Related approaches define patterns using dense, local stencils or support only single segments. Our patterns are defined sparsely and can have a significant extent, i.e., they are integration-based and not local. This allows for a greater flexibility in defining features of interest. Similarity is measured using intrinsic curve properties only, which enables invariance to location, orientation, and scale. Our method starts with splitting stream lines using globally consistent segmentation criteria. It strives to maintain the visually apparent features of the flow as a collection of stream line segments. Most importantly, it provides similar segmentations for similar flow structures. For user-defined patterns of curve segments, our algorithm finds similar ones that are invariant to similarity transformations. We showcase the utility of our method using different 2D and 3D flow fields.},
+}
+
+@article {CGF:CGF12803,
+author = {Köhler, Benjamin and Born, Silvia and van Pelt, Roy F. P. and Hennemuth, Anja and Preim, Uta and Preim, Bernhard},
+title = {A Survey of Cardiac 4D PC-MRI Data Processing},
+journal = {Computer Graphics Forum},
+volume = {36},
+number = {6},
+issn = {1467-8659},
+url = {http://dx.doi.org/10.1111/cgf.12803},
+doi = {10.1111/cgf.12803},
+pages = {5--35},
+keywords = {4D PC-MRI, data processing, cardiovascular diseases, aorta, survey, I.4.9 [Computing Methodologies]: Image Processing and Computer Vision-Applications J.3 [Computing Applications]: Life and Medical Sciences},
+year = {2017},
+abstract = {Cardiac four-dimensional phase-contrast magnetic resonance imaging (4D PC-MRI) acquisitions have gained increasing clinical interest in recent years. They allow to non-invasively obtain extensive information about patient-specific hemodynamics, and thus have a great potential to improve the diagnosis, prognosis and therapy planning of cardiovascular diseases. A dataset contains time-resolved, three-dimensional blood flow directions and strengths, making comprehensive qualitative and quantitative data analysis possible. Quantitative measures, such as stroke volumes, help to assess the cardiac function and to monitor disease progression. Qualitative analysis allows to investigate abnormal flow characteristics, such as vortices, which are correlated to different pathologies. Processing the data comprises complex image processing methods, as well as flow analysis and visualization. In this work, we mainly focus on the aorta. We provide an overview of data measurement and pre-processing, as well as current visualization and quantification methods. This allows other researchers to quickly catch up with the topic and take on new challenges to further investigate the potential of 4D PC-MRI data.},
+}
+
+
+Visual Computer 
+
+@Article{Saini2018,
+author="Saini, Rajkumar
+and Roy, Partha Pratim
+and Dogra, Debi Prosad",
+title="A novel point-line duality feature for trajectory classification",
+journal="The Visual Computer",
+year="2018",
+month="Jan",
+day="29",
+abstract="Trajectory classification is important for understanding object movements within the surveillance area. Raw trajectories are represented by object location in form of (x, y) coordinates. The length of trajectories varies in terms of number of points; thus, it is difficult to classify them into correct classes. The raw features extracted from trajectory do not yield satisfactory results in classification. Thus, robust features are needed that can efficiently represent trajectory sequences and help to improve the classification performance. In this paper, we present a new feature vector that is based on the concept of point-line duality (PLD) transformation, i.e., transformation of a trajectory point from its primal plane into a straight line in dual plane. Classification has been done using hidden Markov model (HMM) framework. We also propose a fusion approach combining classification results obtained from raw feature and PLD feature to improve the performance. Experiments have been carried out on raw trajectories with reduced lengths as well as adding Gaussian noise. Proposed approach has been tested on three publicly available datasets, namely T15, MIT, and CROSS. It has been found that the PLD feature outperforms existing features as well as raw feature when used in HHM-based classification. We have obtained encouraging results by feature combination at the decision level with 97, 96.75 and 99.80{\%} accuracy, respectively, on T15, MIT, and CROSS datasets.",
+issn="1432-2315",
+doi="10.1007/s00371-018-1473-2",
+url="https://doi.org/10.1007/s00371-018-1473-2"
+}
+
+@Article{Zhu2017,
+author="Zhu, Shiping
+and Yan, Lina",
+title="Local stereo matching algorithm with efficient matching cost and adaptive guided image filter",
+journal="The Visual Computer",
+year="2017",
+month="Sep",
+day="01",
+volume="33",
+number="9",
+pages="1087--1102",
+abstract="To make a matching algorithm to satisfy the requirements of high precision and anti-interference, a novel stereo-matching algorithm with efficient matching cost and adaptive guided image filter is proposed. Firstly, we adopt a modified Census transform with a local texture metric to compute the initial cost. It can make full use of the cross-correlation information between pixels. Meanwhile, we incorporate the Census, color and gradient costs as a mixed matching cost algorithm. Then, we aggregate the costs with guided image filter based on adaptive rectangular support window instead of the traditional fixed support window. The variable kernel window is constructed by the local color similarity and spatial distance. In this way, less occluded points will be included in the support region. On this basis, we adopt integral image to further speed up the computation of this step. Finally, the initial disparity of each pixel is selected using winner takes all optimization and the final disparity maps are gained after post-processing. The experimental results demonstrate that the proposed algorithm not only achieves an average error rate of 5.22 {\%} on the Middlebury stereo benchmark data set, but can also overcome the influence of illumination distortion in the matching effectively.",
+issn="1432-2315",
+doi="10.1007/s00371-016-1264-6",
+url="https://doi.org/10.1007/s00371-016-1264-6"
+}
+
