@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="author" content="Michael Julian Moran"/>
+<title>Drawing program</title>
+<style>
+	body{
+		font-family:sans-serif;
+		color:#eee;
+		background:#777;
+		text-shadow:-1px 0 #111, 0 1px #111, 1px 0 #111, 0 -1px #111;
+	}
+	canvas{
+		border:solid 1px black;
+	}
+	span{
+		display:inline-block;
+	}
+	.blotch{
+		width:16px;
+		height:16px;
+		background:black;
+	}
+	.draw
+	{
+		border: solid #000 1px;
+		border-radius: 8px;
+		background: #333;
+		color: #aaa;
+	}
+	.draw:disabled
+	{	
+		background: #555;
+		color: #777;
+	}
+	.mod
+	{
+		border: solid #222 1px;
+		border-radius: 8px;
+		background: #444;
+		color: #999;
+		
+	}
+	.broken
+	{
+		border: solid #000 1px;
+		border-radius: 8px;
+		background: #333;
+		color: #444;
+	}
+	.select
+	{
+		border: solid #000 1px;
+		border-radius: 1em;
+		font-size: .8em;
+	}
+	.select-red
+	{
+		border-color:#f00;
+	}
+	.select-green
+	{
+		border-color:#0f0;
+	}
+	.select-blue
+	{
+		border-color:#00f;
+	}
+	.numbers
+	{
+		font-size:.8em;
+		color: #ccc;
+	}
+</style>
+</head>
+<body>
+<div>
+<span>
+<input class="draw" type="button" value="Point" 	onclick="setMode('poin')"/>
+<input class="draw" type="button" value="Line"  	onclick="setMode('line')"/>
+<input class="draw" type="button" value="Circle"	onclick="setMode('circ')"/>
+<input class="broken" type="button" value="Ellipse"	onclick="setMode('elli')"disabled/>
+<input class="draw" type="button" value="Rectangle"	onclick="setMode('rect')"/>
+<input class="draw" type="button" value="Poly"  	onclick="setMode('poly')"/>
+&nbsp;
+<input class="mod" type="button" value="Close polygon"	onclick="polyclose()"
+title="Completes the polygon.
+Draws a line from the last clicked to the first."/>
+<input class="mod" type="button" value="Done"		onclick="done()"
+title="Syncs canvas with the last state/.
+Ensures all clicks are cleared."/>
+&nbsp;
+&nbsp;
+<input class="mod" type="button" value="Save" onclick="saveImage()"/>
+&nbsp;
+<br/>
+</span>
+<span>
+<canvas width="1" height="1" class="blotch"></canvas>
+<label class="select select-red">&nbsp;Red<input type="range" max="255" value="0" onchange="setColor()"/></label>
+<label class="select select-green">&nbsp;Green<input type="range" max="255" value="0" onchange="setColor()"/></label>
+<label class="select select-blue">&nbsp;Blue<input type="range" max="255" value="0" onchange="setColor()"/></label>
+<br/>
+</span>
+<span>
+<label class="select">&nbsp;Width<input type="number" value="300"/></label>
+<label class="select">&nbsp;Height<input type="number" value="150"/></label>
+<input class="mod" type="button" value="Resize canvas"
+onclick="sizecanvas(this.parentNode.children[0].children[0].value,this.parentNode.children[1].children[0].value)"/>
+</span>
+</div>
+<canvas>HTML5 and JavaScript ES6 support required.</canvas>
+<div class="numbers">(data)</div>
+<script type="text/javascript">
+"using strict";
+var	cursor = {x:0,y:0}
+,	canvas = document.body.children[1]
+,	access = canvas.getContext("2d")
+,	color = {r:0,g:0,b:0,o:255}
+,	image = access.getImageData(0,0,canvas.width,canvas.height)
+,	save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height)
+,	prim
+,	click = []
+,	movement = 0
+,	frame = 0
+;
+function saveImage()
+{
+	access.putImageData(save,0,0);
+	window.open("","_blank","width="+(16+canvas.width)+",height="+(16+canvas.height))
+		.document.write('<img src="'+canvas.toDataURL("image/png")+'"/>');
+	access.putImageData(image,0,0);
+}
+function sizecanvas(x,y)
+{
+	canvas.width = x;
+	canvas.height = y;
+	access.putImageData(image,0,0);
+	image = access.getImageData(0,0,canvas.width,canvas.height);
+	save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+	
+}
+function setColor()
+{
+	let rangeparent = document.body.children[0].children[1];
+	var ctx = rangeparent.children[0].getContext("2d");
+	color.r = rangeparent.children[1].children[0].value;
+	color.g = rangeparent.children[2].children[0].value;
+	color.b = rangeparent.children[3].children[0].value;
+	var imgdata = ctx.getImageData(0, 0, 1, 1);
+	imgdata.data[0]=color.r;
+	imgdata.data[1]=color.g;
+	imgdata.data[2]=color.b;
+	imgdata.data[3]=color.o;
+	ctx.putImageData(imgdata, 0, 0);
+}
+setColor();
+function setMode(mode)
+{
+	let inputparent = document.body.children[0].children[0];
+	prim = mode;
+	click = [];
+	inputparent.children[6].hidden = true;
+	switch(mode){
+	case 'poin':
+		inputparent.children[0].disabled = true;
+		inputparent.children[1].disabled = false;
+		inputparent.children[2].disabled = false;
+//		inputparent.children[3].disabled = false;
+		inputparent.children[4].disabled = false;
+		inputparent.children[5].disabled = false;
+		break;
+        case 'line':
+		inputparent.children[0].disabled = false;
+		inputparent.children[1].disabled = true;
+		inputparent.children[2].disabled = false;
+//		inputparent.children[3].disabled = false;
+		inputparent.children[4].disabled = false;
+		inputparent.children[5].disabled = false;
+		break;
+        case 'circ':
+		inputparent.children[0].disabled = false;
+		inputparent.children[1].disabled = false;
+		inputparent.children[2].disabled = true;
+//		inputparent.children[3].disabled = false;
+		inputparent.children[4].disabled = false;
+		inputparent.children[5].disabled = false;
+		break;
+        case 'elli':
+		inputparent.children[0].disabled = false;
+		inputparent.children[1].disabled = false;
+		inputparent.children[2].disabled = false;
+//		inputparent.children[3].disabled = true;
+		inputparent.children[4].disabled = false;
+		inputparent.children[5].disabled = false;
+		break;
+        case 'rect':
+		inputparent.children[0].disabled = false;
+		inputparent.children[1].disabled = false;
+		inputparent.children[2].disabled = false;
+//		inputparent.children[3].disabled = false;
+		inputparent.children[4].disabled = true;
+		inputparent.children[5].disabled = false;
+		break;
+        case 'poly':
+		inputparent.children[0].disabled = false;
+		inputparent.children[1].disabled = false;
+		inputparent.children[2].disabled = false;
+//		inputparent.children[3].disabled = false;
+		inputparent.children[4].disabled = false;
+		inputparent.children[5].disabled = true;
+		inputparent.children[6].hidden = false;
+		break;
+	}
+}
+setMode('line');
+function pixle(x,y)
+{
+	let pz =  y*image.width*4 + x*4|0;
+	image.data[ pz    ] = color.r  // red
+	image.data[ pz + 1] = color.g  // green
+	image.data[ pz + 2] = color.b  // blue
+	image.data[ pz + 3] = color.o  // opacity
+}
+
+function line(x1,y1,x2,y2)
+{
+	// console.log("line( "+x1+" "+y1+" "+x2+" "+y2+" )");
+	if(x2 < x1)
+	{ // O |-> D normalise the circle to pos x
+		let tmp = x1;
+		x1 = x2;
+		x2 = tmp;
+		tmp = y1;
+		y1 = y2;
+		y2 = tmp;
+	}
+	let	dx = x2 - x1
+	,	dy = y2 - y1
+	,	err = 0.0
+	;
+	if((dy<0?-dy:dy)>dx)
+	{
+		let t = x1
+		,	derr = dy < 0 ? -dx / dy : dx /dy
+		;
+		for (let s = y1; s < y2; s++)
+		{
+			pixle(t,s);
+			err += derr;
+			for (;err >= 0.5;err -= 1.0)
+				t += 1;
+		}
+		t = x2;
+		for (let s = y2; s < y1; s++)
+		{
+			pixle(t,s);
+			err += derr;
+			for (;err >= 0.5;err -= 1.0)
+				t -= 1;
+		}
+	}
+	else
+	{
+		let t = y1
+		,	derr = dy < 0 ? -dy / dx : dy /dx
+		;
+		for (let s = x1; s < x2; s++)
+		{
+			pixle(s,t);
+			err += derr;
+			for (;err >= 0.5;err -= 1.0)
+				t += dy>0?1:-1;
+		}
+	}
+}
+
+function circle(x1,y1,x2,y2)
+{
+	let	dy = y2>y1 ? y2-y1 : y1-y2
+	,	dx = x2>x1 ? x2-x1 : x1-x2
+	,	r = dx * dx + dy * dy
+	,	sr = Math.sqrt(r)
+	,	x = sr-1|0
+	,	y = 0
+	,	vx = 0
+	,	vy = 0
+	,	err = -r +1
+	;
+	while(x >= y)
+	{
+		pixle(x1 + x, y1 + y);
+		pixle(x1 + y, y1 + x);
+		pixle(x1 - y, y1 + x);
+		pixle(x1 - x, y1 + y);
+		pixle(x1 - x, y1 - y);
+		pixle(x1 - y, y1 - x);
+		pixle(x1 + y, y1 - x);
+		pixle(x1 + x, y1 - y);
+		if(err <= 0)
+		{
+			y++;
+			err += vy;
+			vy += sr;
+		}
+		if(err > 0)
+		{
+			x--;
+			vx += sr;
+			err += vx - r;
+		}
+	}
+	/*
+	pixle(x1,y1);  // midpoint
+	pixle(x1 + dx, y1 + dy);
+	pixle(x1 + dy, y1 + dx);
+	pixle(x1 - dy, y1 + dx);
+	pixle(x1 - dx, y1 + dy);
+	pixle(x1 - dx, y1 - dy);
+	pixle(x1 - dy, y1 - dx);
+	pixle(x1 + dy, y1 - dx);
+	pixle(x1 + dx, y1 - dy);
+	*/
+}
+
+function ellipse(x1,y1,x2,y2,x,y)
+{
+	let	y0 = (y1+y2)/2
+	,	x0 = (x1+x2)/2
+	;
+	pixle(x1,y1);  // midpoint 1
+	pixle(x0,y0);  // midpoint
+	pixle(x2,y2);  // midpoint 2
+	pixle(x, y);  // a, b
+}
+
+function rectangle(x1,y1,x2,y2)
+{
+	line(x1,y1,x2,y1);
+	line(x2,y1,x2,y2);
+	line(x2,y2,x1,y2);
+	line(x1,y2,x1,y1);
+}
+function polyclose()
+{
+	if(click.length==2){
+		image = new ImageData(new Uint8ClampedArray(save.data),save.width,save.height);
+		line(click[0].x,click[0].y,click[1].x,click[1].y);
+	}
+	click = [];
+	save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+	access.putImageData(image,0,0);
+}
+function done(){
+	image = new ImageData(new Uint8ClampedArray(save.data),save.width,save.height);
+	click = [];
+	save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+	access.putImageData(image,0,0);
+}
+canvas.onmousedown=function()
+{
+	click.push({ x:cursor.x,y:cursor.y});
+	movement = 0;
+	switch(prim)
+	{
+	case 'poin':
+		pixle(cursor.x,cursor.y);
+		save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		access.putImageData(image,0,0);
+		break;
+	case 'line':
+		if(click.length>=2)
+		{
+			click = [];
+			save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		}break;
+	case 'circ':
+		if(click.length>=2)
+		{
+			click = [];
+			save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		}break;
+	case 'elli':
+		if(click.length>=3)
+		{
+			click = [];
+			save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		}break;
+	case 'rect':
+		if(click.length>=2)
+		{
+			click = [];
+			save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		}break;
+	case 'poly':
+		
+		if(click.length==1) click.push({x:click[0].x,y:click[0].y});
+		if(click.length>2){
+			let t = click[2];
+			click[2] = click[1];
+			click[1] = t;
+			click.pop();
+			save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		}
+		break;
+	}
+	if(save==image)console.log("click");
+	
+	
+};
+canvas.onmouseup=function()
+{
+	switch(prim)
+	{
+	case 'poin':
+		click = [];
+		break;
+	}
+};
+canvas.onmousemove = function(e){
+	e = e||window.event;
+	cursor.x = e.clientX - canvas.offsetLeft - 2;
+	cursor.y = e.clientY - canvas.offsetTop - 2;
+	document.body.children[2].innerText = "(" + cursor.x + ", " + cursor.y + ")";
+	if(click.length){
+		image = new ImageData(new Uint8ClampedArray(save.data),save.width,save.height);
+	switch(prim)
+	{
+	case 'poin':
+		pixle(cursor.x,cursor.y);
+		save = new ImageData(new Uint8ClampedArray(image.data),image.width,image.height);
+		break;
+	case 'line':
+		line(click[0].x,click[0].y,cursor.x,cursor.y);
+		break;
+	case 'circ':
+		circle(click[0].x,click[0].y,cursor.x,cursor.y);
+		break;
+	case 'elli':
+		if(click.length==2)
+		{
+			ellipse(click[0].x,click[0].y,click[1].x,click[1].y,cursor.x,cursor.y);
+		}
+		break;
+	case 'rect':
+		rectangle(click[0].x,click[0].y,cursor.x,cursor.y);
+		break;
+	case 'poly':
+		if(click.length==2)
+		{
+			line(click[1].x,click[1].y,cursor.x,cursor.y);
+		}
+		break;
+	}
+	access.putImageData(image,0,0);
+	movement++;
+	}
+};
+/*(function canvasColor(){
+	this.gs = this.gs|0;
+	let t = this.gs;
+	if (t < 0)t = -t;
+	document.body.style.background = "rgba("+t+","+t+","+t+","+"1)";
+	canvas.style.background = "rgba("+(255-t)+","+(255-t)+","+(255-t)+","+"1)";
+	if(this.gs++ > 255)this.gs=-255;
+	setTimeout(function(){canvasColor();},1000);
+})();*/
+</script>
+</body>
+</html>
