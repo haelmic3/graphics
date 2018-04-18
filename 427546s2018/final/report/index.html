@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8"/>
+<title>Help document for my render engine.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+body{
+	font-family:arial;
+	color:#333;
+	background:#ddd;
+	transition:color 1s;
+	transition: background 1s;
+}
+span.invert{color:#888;}
+span.invert:hover{color:#999;text-shadow:0px 0px 1px #555;}
+</style>
+</head>
+<body>
+<script>
+var stat = 0;
+document.body.insertAdjacentHTML('afterbegin',
+"<span class=\"invert\" onclick=\"invert()\">Invert background</span>");
+function invert()
+{
+	if(stat)
+	{
+		document.styleSheets[0].cssRules[0].style.color = "#333";
+		document.styleSheets[0].cssRules[0].style.background = "#ddd";
+	}else{
+		document.styleSheets[0].cssRules[0].style.color = "#ddd";
+		document.styleSheets[0].cssRules[0].style.background = "#333";
+	}
+	stat=(stat+1)%2;
+}
+</script>
+<h1>Implementation updates</h1>
+<h2>18 April 2018</h2>
+<p>I started the week with fixing the lighting a bit... all I did was make the point light move-able from the javascript</p>
+<p>I added a button for orthographic or perspective viewing</p>
+<p>I begain writing a prototype for generating a scene.</p>
+<h2>11 April 2018</h2>
+<p>I started working on lighting.
+I failed on many accounts.</p>
+<p>I started the week playing with coloring the cube.
+I ended up scraping most of that work although it can be found in the <a href="../0.1.1/">0.1.1 archive</a>. I underestimated the amoutnt of work lighting would be and I bairly produced anything that is worth keeping.</p>
+<p>There's a chance I might just start over. But if I can salvage something I will. The main other plan this week was to set up point manipulation.
+I have this idea for how I want to do it but I failed to make any progress toward that plan.</p>
+<p>A frustrating week.</p>
+<h2>4 April 2018</h2>
+<p>I start working on 3d graphics.
+At the beginning of the week I was still working from the Mozilla tutorial.
+I got a 3d vertex buffer set up and I open it up.
+Instead of seeing the cube as a solid projection it shows up as vertex points.
+They transform so I know that I have everything right.
+I spend the entire week going line by line trying to figure out why wont draw.
+I wake up Tuesday and decide to work on it after pulling my hair out the day before.
+I watch a lecture on the tutorial. Tried shrinking the cube, which only shrunk the cube.
+I knew there was a spelling error some where. I had told my self it was the case.
+I find there are different enumerated types for drawing. I try a different one.
+It worked. I had spelled TRIANGLES wrong.
+I spent today getting the project ready to move into dynamic buffers. For user modeling. 
+</p>
+<h2>28 March 2018</h2>
+<p>I started the project by setting up the page layout.
+I then needed to learn WebGL so started following a Mozilla tutorial.
+I got to render a 2d square in WebGL and at that point I was out of time..
+</p>
+</body>
+</html>

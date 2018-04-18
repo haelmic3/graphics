@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8"/>
+<title>Help document for my render engine.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+body{
+	font-family:arial;
+	color:#333;
+	background:#ddd;
+	transition:color 1s;
+	transition: background 1s;
+}
+a{color:#099;}
+a:visited{color:#909;}
+span.invert{color:#888;}
+span.invert:hover{color:#999;text-shadow:0px 0px 1px #555;}
+</style>
+<script>
+var s=0;if(document.cookie)r();
+(function a(){setTimeout(function(){if(!document.body)setTimeout(function(){a();},0);
+document.body.insertAdjacentHTML('afterbegin',
+"<span class=\"invert\" onclick=\"r()\">Invert background</span>");},10);})();
+function r()
+{
+	if(s)
+	{
+		document.styleSheets[0].cssRules[0].style.color = "#333";
+		document.styleSheets[0].cssRules[0].style.background = "#ddd";
+		document.cookie='';
+	}else{
+		document.styleSheets[0].cssRules[0].style.color = "#ddd";
+		document.styleSheets[0].cssRules[0].style.background = "#333";
+		document.cookie=true;
+	}
+	s=(s+1)%2;
+}
+</script>
+</head>
+<body>
+<h1>What is this</h1>
+<p>The application is currently my first atempt at lighting a cube.</p>
+<p>In several ways it is a failure in other ways it's good enough to start.</p>
+<p>The controls let you rotate the entire scene which means that the light
+source is also rotated.</p>
+<p>It would be desireable to be able to move the light source but unfortunatly
+there is no setting for that yet.</p>
+</body>
+</html>

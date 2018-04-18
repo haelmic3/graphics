@@ -21,82 +21,69 @@ _______________________________________________________________________________
 
 */
 "use strict";
-// #JumpObjectData
+function promiseFile(file){
+	return new Promise((resolve, reject)=>{
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", file);
+		xhr.overrideMimeType("text/plain");
+		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onerror = () => resolve(xhr.statusText);
+		xhr.send();
+	});
+}
+
+// #Jump_Shaders
+window.VSpromise = promiseFile("shader.vert");
+window.FSpromise = promiseFile("shader.frag");
+
+// #Jump_Object_Data
 function initBuffers(gl)
 {
-// position data for the cube
-	const positionBuffer = gl.createBuffer();
+// data for the cube
+	const cubeBuffer = gl.createBuffer();
 
 	// set `positionBuffer' as the buffer to apply operations to
-	gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+	gl.bindBuffer(gl.ARRAY_BUFFER, cubeBuffer);
 
 	// create the array for a cube
-	const positions = [
-		// Front face
-		-1.0, -1.0,  1.0,
-		 1.0, -1.0,  1.0,
-		 1.0,  1.0,  1.0,
-		-1.0,  1.0,  1.0,
-		
-		// Back face
-		-1.0, -1.0, -1.0,
-		-1.0,  1.0, -1.0,
-		 1.0,  1.0, -1.0,
-		 1.0, -1.0, -1.0,
-		
-		// Top face
-		-1.0,  1.0, -1.0,
-		-1.0,  1.0,  1.0,
-		 1.0,  1.0,  1.0,
-		 1.0,  1.0, -1.0,
-		
-		// Bottom face
-		-1.0, -1.0, -1.0,
-		 1.0, -1.0, -1.0,
-		 1.0, -1.0,  1.0,
-		-1.0, -1.0,  1.0,
-		
-		// Right face
-		 1.0, -1.0, -1.0,
-		 1.0,  1.0, -1.0,
-		 1.0,  1.0,  1.0,
-		 1.0, -1.0,  1.0,
-		
-		// Left face
-		-1.0, -1.0, -1.0,
-		-1.0, -1.0,  1.0,
-		-1.0,  1.0,  1.0,
-		-1.0,  1.0, -1.0
+	const cube = [
+		// Position		Color
+		// X     Y     Z	  R    G    B    O
+/*Front face*/	-1.0, -1.0,  1.0,	1.0, 1.0, 1.0, 1.0,
+		 1.0, -1.0,  1.0,	1.0, 0.5, 0.5, 1.0,
+		 1.0,  1.0,  1.0,	0.5, 1.0, 0.5, 1.0,
+		-1.0,  1.0,  1.0,	0.5, 0.5, 1.0, 1.0,
+
+/*Back face*/	-1.0, -1.0, -1.0,	0.0, 1.0, 1.0, 1.0,
+		-1.0,  1.0, -1.0,	1.0, 0.5, 0.5, 1.0,
+		 1.0,  1.0, -1.0,	0.5, 1.0, 0.5, 1.0,
+		 1.0, -1.0, -1.0,	0.5, 0.5, 1.0, 1.0,
+
+/*Top face*/	-1.0,  1.0, -1.0,	1.0, 0.0, 1.0, 1.0,
+		-1.0,  1.0,  1.0,	1.0, 0.5, 0.5, 1.0,
+		 1.0,  1.0,  1.0,	0.5, 1.0, 0.5, 1.0,
+		 1.0,  1.0, -1.0,	0.5, 0.5, 1.0, 1.0,
+
+/*Bottom face*/	-1.0, -1.0, -1.0,	1.0, 1.0, 0.0, 1.0,
+		 1.0, -1.0, -1.0,	1.0, 0.5, 0.5, 1.0,
+		 1.0, -1.0,  1.0,	0.5, 1.0, 0.5, 1.0,
+		-1.0, -1.0,  1.0,	0.5, 0.0, 1.0, 1.0,
+
+/*Right face*/	 1.0, -1.0, -1.0,	1.0, 1.0, 1.0, 1.0,
+		 1.0,  1.0, -1.0,	1.0, 0.5, 0.5, 1.0,
+		 1.0,  1.0,  1.0,	0.5, 1.0, 0.5, 1.0,
+		 1.0, -1.0,  1.0,	0.5, 0.5, 1.0, 1.0,
+
+/*Left face*/	-1.0, -1.0, -1.0,	1.0, 1.0, 1.0, 1.0,
+		-1.0, -1.0,  1.0,	1.0, 0.5, 0.5, 1.0,
+		-1.0,  1.0,  1.0,	0.5, 1.0, 0.5, 1.0,
+		-1.0,  1.0, -1.0,	0.5, 0.5, 1.0, 1.0,
 	];
 
 	gl.bufferData(	gl.ARRAY_BUFFER,
-			new Float32Array(positions),
+			new Float32Array(cube),
 			gl.STATIC_DRAW);
 // end of position data
-
-
-// color data
-	// add color to each point
-	//		R	G	B	O
-	const cf = [
-		[1.0,	1.0,	1.0,	1.0],	// Front face:	white
-		[1.0,	0.0,	0.0,	1.0],	// Back face:	red
-		[0.0,	1.0,	0.0,	1.0],	// Top face:	green
-		[0.0,	0.0,	1.0,	1.0],	// Bottom face:	blue
-		[1.0,	1.0,	0.0,	1.0],	// Right face:	yellow
-		[1.0,	0.0,	1.0,	1.0]	// Left face:	purple
-	];
-	var colors = [];
-	for (var k = 0; k < cf.length; ++k)
-	{
-		const c = cf[k];
-		colors = colors.concat(c,c,c,c);
-	}
-	const colorBuffer = gl.createBuffer();
-
-	gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(colors),gl.STATIC_DRAW);
-// end of color data
 
 
 // index data
@@ -121,17 +108,16 @@ function initBuffers(gl)
 
 
 	
-	return	{	position: positionBuffer
-		,	color: colorBuffer
+	return	{	cube: cubeBuffer
 		,	indices: indexBuffer
 		};
 
 }
-// #JumpRender
+// #Jump_Render
 var rotation = 0.0,then = 0,numframes=0,frames=[60];
 function render(now)
 {
-	// floor miliseconds
+	// floor milliseconds
 	now*=1000.0;
 	now|=0;
 	var deltaTime = (now - then);// ms/sec
@@ -185,49 +171,49 @@ function drawScene(gl, programInfo, buffers)
 			);
 	mat4.rotate	(	mvMatrix
 			,	mvMatrix
-			,	rotation
+			,	view.settings.rotationZ
 			,	[0,0,1]
 			);
 	mat4.rotate	(	mvMatrix
 			,	mvMatrix
-			,	rotation*.7
+			,	view.settings.rotationY
 			,	[0,1,0]
 			);
 	mat4.rotate	(	mvMatrix
 			,	mvMatrix
-			,	rotation*.1
+			,	view.settings.rotationX
 			,	[1,0,0]
 			);
 
-// #JumpDrawPosition
-	gl.bindBuffer(gl.ARRAY_BUFFER,buffers.position);
+// #Jump_Draw_Position
+	gl.bindBuffer(gl.ARRAY_BUFFER,buffers.cube);
 	gl.vertexAttribPointer
 	(	programInfo.attribLocations.vertexPosition
 	,	3		// we have 3 values per point XYZ
 	,	gl.FLOAT	// data type used was f32
 	,	false		// normalise
-	,	0		// stride (bytes per segment) 0 = use above
+	,	28		// stride (bytes per segment) 0 = use above
 	,	0		// offset (starting byte)
 	);
 	gl.enableVertexAttribArray
 	(	programInfo.attribLocations.vertexPosition	);
 
 
-// #JumpDrawColor
-	gl.bindBuffer(gl.ARRAY_BUFFER,buffers.color);
+// #Jump_Draw_Color
+	gl.bindBuffer(gl.ARRAY_BUFFER,buffers.cube);
 	gl.vertexAttribPointer
 	(	programInfo.attribLocations.vertexColor
 	,	4		// we have 4 values per point RGBO
 	,	gl.FLOAT	// data type used was f32
 	,	false		// normalise
-	,	0		// stride (bytes per segment) 0 = use above
-	,	0		// offset (starting byte)
+	,	28		// stride (bytes per segment) 0 = use above
+	,	12		// offset (starting byte)
 	);
 	gl.enableVertexAttribArray
 	(	programInfo.attribLocations.vertexColor 	);
 
 
-// #JumpDrawIndices
+// #Jump_Draw_Indices
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices	);
 
 
@@ -249,38 +235,38 @@ function drawScene(gl, programInfo, buffers)
 	gl.drawElements(gl.TRIANGLES,36,gl.UNSIGNED_SHORT,0);
 	gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
 	gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0,
-0.0,0.0,0.0,1.0
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0,
+1.0,0.0,0.0,1.0,
+0.0,1.0,0.0,1.0,
+0.0,0.0,1.0,1.0,
+1.0,1.0,1.0,1.0
 ]),gl.STATIC_DRAW);
 	gl.vertexAttribPointer
 	(	programInfo.attribLocations.vertexColor
@@ -297,36 +283,21 @@ function drawScene(gl, programInfo, buffers)
 
 
 
-// #JumpVertexShader
-window.VStext = `
-	attribute vec3 aVertexPosition;
-	attribute vec4 aVertexColor;
 
-	uniform mat4 uModelViewMatrix;
-	uniform mat4 uProjectionMatrix;
-
-	varying lowp vec4 vColor;
-
-	void main(void)
-	{
-		gl_Position = 
-				uProjectionMatrix *
-				uModelViewMatrix *
-				vec4(aVertexPosition,1.0);
-		vColor = aVertexColor;
-	}
-`;
-//#JumpFragmentShader
-window.FStext = `
-	precision mediump float;
-	varying lowp vec4 vColor;
-	void main(void)
-	{
-		gl_FragColor = vColor;
-	}
-`;
-
-// #JumpSetup
+// #Jump_Setup
+function setSettings()
+{
+	view.settings.rotationX=view.controls.rotationX.value/180.0*Math.PI;
+	view.settings.rotationY=view.controls.rotationY.value/180.0*Math.PI;
+	view.settings.rotationZ=view.controls.rotationZ.value/180.0*Math.PI;
+	view.settings.color    =view.controls.color.value;
+}
+function resetSettings(){
+	view.controls.rotationX.value=180;
+	view.controls.rotationY.value=180;
+	view.controls.rotationZ.value=180;
+	setSettings();
+}
 window.setup = function()
 {
 	// setup view
@@ -334,22 +305,37 @@ window.setup = function()
 	{	header	:	document.body.children[0]
 	,	context	:	document.body.children[1]
 	,	footer	:	document.body.children[2]
-	,	canvas:undefined
-	,	gl:undefined
-	,	programInfo: undefined
-	,	objectBuffer: undefined
-	,	frame: undefined
+	,	canvas	:	undefined
+	,	gl	:	undefined
+	,	programInfo:	undefined
+	,	objectBuffer:	undefined
+	,	frame	:	undefined
+	,	controls:	undefined
+	,	settings:	{}
 	};
 	// setup view.controls
 	view.header.innerHTML=""+
-	"Controls <a href=\"update/index.html\">Help</a>";
+	"<a href=\"help\">Help</a>"+
+	"<label><input value=\"Front&amp;Center\" type=\"button\" onclick=\"resetSettings();\"/></label>\n"+
+	"<label>X<input max=\"360\" type=\"range\"/></label>\n"+
+	"<label>Y<input max=\"360\" type=\"range\"/></label>\n"+
+	"<label>Z<input max=\"360\" type=\"range\"/></label>\n"+
+	"<label><input type=\"color\"/></label>\n";
+	view.controls = 
+	{	rotationX:	view.header.children[2].children[0]
+	,	rotationY:	view.header.children[3].children[0]
+	,	rotationZ:	view.header.children[4].children[0]
+	,	color    :	view.header.children[5].children[0]
+	};
+	setSettings();
+	for (var i in view.controls)view.controls[i].oninput = setSettings;
 	// setup view.canvas
 	view.context.innerHTML=""+
 	"<canvas>\n"+
 	"The HTML5 canvas element must be enabled to function.\n"+
 	"</canvas>";
 	// setup view.status
-	view.footer.innerHTML="Loading finished.";
+	view.footer.innerText="Waiting on webGL.";
 	setTimeout(function(){view.footer.innerHTML="";},500);
 	
 
@@ -373,8 +359,11 @@ window.setup = function()
 	}
 	view.gl.clearColor(0.5,0.5,0.5,1.0);
 	view.gl.clear(view.gl.COLOR_BUFFER_BIT);
-// #JumpProgramInfo
-const iprog = initShaderProgram(view.gl,VStext,FStext)
+// #Jump_Program_Info
+
+VSpromise.then(function(vs){
+FSpromise.then(function(fs){
+const iprog = initShaderProgram(view.gl,vs,fs);
 const aposi = view.gl.getAttribLocation(iprog,"aVertexPosition")
 const acolo = view.gl.getAttribLocation(iprog,"aVertexColor")
 const upjmx = view.gl.getUniformLocation(iprog,"uProjectionMatrix")
@@ -395,4 +384,5 @@ const umvmx = view.gl.getUniformLocation(iprog,"uModelViewMatrix")
 
 	view.objectBuffer = initBuffers(view.gl);
 	view.frame = requestAnimationFrame(render);
+});});
 };setup();

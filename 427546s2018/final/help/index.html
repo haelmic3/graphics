@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8"/>
+<title>Help document for my render engine.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+body{
+	font-family:arial;
+	color:#333;
+	background:#ddd;
+	transition:color 1s;
+	transition: background 1s;
+}
+a{color:#099;}
+a:visited{color:#909;}
+span.invert{color:#888;}
+span.invert:hover{color:#999;text-shadow:0px 0px 1px #555;}
+</style>
+<script>
+var s=0;if(document.cookie)r();
+(function a(){setTimeout(function(){if(!document.body)setTimeout(function(){a();},0);
+document.body.insertAdjacentHTML('afterbegin',
+"<span class=\"invert\" onclick=\"r()\">Invert background</span>");},10);})();
+function r()
+{
+	if(s)
+	{
+		document.styleSheets[0].cssRules[0].style.color = "#333";
+		document.styleSheets[0].cssRules[0].style.background = "#ddd";
+		document.cookie='';
+	}else{
+		document.styleSheets[0].cssRules[0].style.color = "#ddd";
+		document.styleSheets[0].cssRules[0].style.background = "#333";
+		document.cookie=true;
+	}
+	s=(s+1)%2;
+}
+</script>
+</head>
+<body>
+<h1>Controls</h1>
+<p>There are a number of controls added in this version</p>
+<p>The first set of buttons stop and restart the rendering for preformance and screenshot purposes.</p>
+<p>There is a drop down that allows the changing of the projection method. Currently it allows perspective and orthographic projections.</p>
+<p>Sliders control rotation for xyz</p>
+<p>The color swatch does nothing</p>
+<p>Sliders control the xyz position of a light.</p>
+</body>
+</html>
