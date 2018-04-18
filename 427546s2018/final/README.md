@@ -8,22 +8,22 @@ More specifically [this](https://raw.githubusercontent.com/toji/gl-matrix/master
 
 The current state of the project is rendering simple shapes,
 with vertex transforms.
-In the canvas there should be a cube projection.
-There are 2 draw calls for the shape. The first is the fill triangle
-call colored sides.
-The second is a draw line call to show the triangles.
-Under the canvas there is a little bit of data used for debugging.
+In the canvas there should be a cube projection. and a wierd triangle with even stranger normals. casts no shadow or anythng T\_T
+Under the canvas there is a little bit of data used for understainding framrate of the canvas and runtime.
+There is no preformance metric for the responsiveness of the browser or html controls currently.
 
-There is no interaction yet. The main focus of this week was to:
+There is some interaction now. The main focus of this week was to:
 
- - setup a 3d drawable
- - Spell gl.TRIANGLES correctly so the form is solid instead of points.
- - Begin separating components into their own files.
- - Begin merging the position and color buffers into one general object buffer
- - And other tweaks to get ready for dynamic user modeling.
+ - open shaders with XHR for cacheing
+ - setup artifical light with bad gamma
+ - added a moveable point light
+ - begin work on making a dynamic modeler
 
 Plans for the next week:
 
- - open shaders with XHR
- - set up dynamic buffers
+ - set up dynamic model buffers
  - work on UI.
+ - fix lighting
+ - Allow dinamic introduction of new lighting
+ - make sure shadows work
+ - increase the number of asyncronus components for best cacheing.
